@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>resources/back-arrow.png</file>
+        <file>StartPage.qml</file>
+        <file>resources/question.png</file>
+        <file>resources/eraser.png</file>
+        <file>resources/gear.png</file>
+        <file>resources/lamp.png</file>
+        <file>resources/pen.png</file>
+        <file>resources/repeat.png</file>
+        <file>EasyHard.qml</file>
+        <file>resources/tables.txt</file>
+        <file>Records.qml</file>
+    </qresource>
+</RCC>
