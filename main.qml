@@ -13,6 +13,8 @@ Window {
     title: qsTr("SUDOKU")
     color: settings.color_background
 
+    property bool isGameGoing: true
+
     Settings {
         id: settings
         property color color_background: "#4C5451"
@@ -30,8 +32,7 @@ Window {
 
     Records {
         id: records
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         anchors.verticalCenter: parent.verticalCenter
         color: settings.color_background_2
         z: 10
@@ -40,8 +41,7 @@ Window {
 
     EasyHard {
         id: easyhard
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         anchors.verticalCenter: parent.verticalCenter
         color: settings.color_background_2
         z:10
@@ -49,6 +49,7 @@ Window {
     }
 
     Rectangle {
+        enabled: isGameGoing
         id: field
         width: 414
         height: 414
@@ -75,6 +76,10 @@ Window {
         }
 
         TableView {
+            property int activeIndex: 82
+            property int activeColumn: 9
+            property int activeRow: 9
+            property bool isLegal: true
             id: table
             anchors.fill: parent
             interactive: false
@@ -85,7 +90,7 @@ Window {
             delegate: Rectangle {
                 implicitWidth: parent.width / 9
                 implicitHeight: parent.height / 9
-                color: "transparent" // index === table.currentIndex ? "black" :
+                color: index === table.activeIndex ? (table.isLegal ? settings.color_background_2 : "red") : "transparent"
                 Text {
                     text: model.num === 0 ? "" : model.num
                     color: settings.color_foreground
@@ -112,7 +117,11 @@ Window {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-//                        table.currentIndex = index;
+                        Sudoku.SelectSquare(column, row);
+                        table.isLegal = true;
+                        table.activeIndex = index;
+                        table.activeColumn = column;
+                        table.activeRow = row;
                     }
                 }
             }
@@ -127,7 +136,10 @@ Window {
         icon.source: "qrc:/resources/back-arrow.png"
         icon.width: 40
         icon.height: 40
-        onClicked: startpage.visible = true
+        onClicked: {
+            isGameGoing = false
+            startpage.visible = true
+        }
         background: Rectangle {
             implicitWidth: 40
             implicitHeight: 40
@@ -158,6 +170,7 @@ Window {
      }
 
     RowLayout {
+        enabled: isGameGoing
         anchors.top: field.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: field.horizontalCenter
@@ -170,7 +183,8 @@ Window {
                 Layout.minimumHeight: 50
                 Layout.minimumWidth: 45
                 onClicked: {
-                    Sudoku.SetValue(0, 0, index + 1);
+                    table.isLegal = Sudoku.SetValue(table.activeColumn, table.activeRow, index + 1)
+
                 }
 
                 contentItem: Text {
@@ -192,6 +206,7 @@ Window {
     }
 
     ColumnLayout {
+        enabled: isGameGoing
         anchors.left: field.right
         anchors.verticalCenter: field.verticalCenter
         anchors.leftMargin: 20

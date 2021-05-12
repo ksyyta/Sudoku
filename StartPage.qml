@@ -90,7 +90,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
-                }
+            }
 
             background: Rectangle {
                 color: settings.color_background

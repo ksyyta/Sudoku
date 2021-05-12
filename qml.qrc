@@ -10,7 +10,6 @@
         <file>resources/pen.png</file>
         <file>resources/repeat.png</file>
         <file>EasyHard.qml</file>
-        <file>resources/tables.txt</file>
         <file>Records.qml</file>
     </qresource>
 </RCC>

@@ -13,5 +13,24 @@ Rectangle {
         anchors.topMargin: 50
     }
 
+    Button {
+        id: back_bbutton
+//        anchors.bottom: parent.top
+//        anchors.left: parent.left
+        icon.source: "qrc:/resources/back-arrow.png"
+        icon.width: 40
+        icon.height: 40
+        onClicked: {
+            parent.visible = false;
+            startpage.visible = true;
+        }
+        background: Rectangle {
+            implicitWidth: 40
+            implicitHeight: 40
+            color: settings.color_foreground
+            radius: 2
+        }
+    }
+
 
 }

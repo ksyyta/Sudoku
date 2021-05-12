@@ -11,6 +11,7 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: 130
             onClicked: {
+                isGameGoing = true
                 parent.visible = false
                 timer_kus.count = 0
                 timer_kus.restart()
@@ -39,6 +40,7 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: 320
             onClicked: {
+                isGameGoing = true
                 parent.visible = false
                 timer_kus.count = 0
                 timer_kus.restart()
