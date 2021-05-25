@@ -10,9 +10,10 @@ class Engine
 public:
     Engine();
     int Value(int x, int y);
+    int DefaultValue(int x, int y);
     bool MakeMove(int x, int y, int num);
     bool Legal(int x, int y, int num);
-    void ClearCell(int x, int y);
+    bool ClearCell(int x, int y);
     bool Solve(int x, int y);
     void StartGame();
     void Print();

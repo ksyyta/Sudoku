@@ -4,23 +4,21 @@
 #include <QObject>
 #include <iostream>
 #include "sudokufield.h"
-#include "sudokumodel.h"
 
 class Sudoku : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(SudokuField *model READ GetModel)
+    Q_PROPERTY(SudokuField *model READ GetModel CONSTANT)
 public:
     explicit Sudoku(QObject *parent = nullptr);
 
     Q_INVOKABLE bool SetValue(int x, int y, int value)
     {
+        if (engine.Value(x, y))
+            return true;
+
         if (engine.MakeMove(x, y, value)) {
-
-            const auto table_idx = model.index(x, y);
-
             model.Reset();
-
             return true;
         }
         return false;
@@ -41,8 +39,15 @@ public:
         engine.Refresh();
         model.Reset();
     }
-    Q_INVOKABLE void SelectSquare(int column, int row)
+    Q_INVOKABLE void Clear(int x, int y)
     {
+        if (engine.ClearCell(x, y))
+            model.Reset();
+    }
+    Q_INVOKABLE void Restart()
+    {
+        engine.StartGame();
+        model.Reset();
     }
 private:
     SudokuField* GetModel() { return &model; }

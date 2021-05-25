@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 Rectangle {
 
@@ -15,8 +16,8 @@ Rectangle {
 
     Button {
         id: back_bbutton
-//        anchors.bottom: parent.top
-//        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.left: parent.left
         icon.source: "qrc:/resources/back-arrow.png"
         icon.width: 40
         icon.height: 40
@@ -33,4 +34,24 @@ Rectangle {
     }
 
 
+
+    ListView {
+        anchors.centerIn: parent
+        height: parent.height / 2
+        width: parent.width / 2
+        model: 10
+        delegate: RowLayout {
+            spacing: 10
+            Text {
+                text: settings.recordsList[index]
+                color: "black"
+                font.pointSize: 20
+            }
+            Text {
+                text: (index + 1) + "."
+                color: "black"
+                font.pointSize: 20
+            }
+        }
+    }
 }

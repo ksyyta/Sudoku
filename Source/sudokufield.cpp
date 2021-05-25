@@ -7,7 +7,7 @@ SudokuField::SudokuField(Engine &engine_, QObject *parent)
 
 QVariant SudokuField::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    // FIXME: Implement me!
+    return QVariant();
 }
 
 bool SudokuField::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
@@ -45,7 +45,17 @@ QVariant SudokuField::data(const QModelIndex &index, int role) const
     const int row = index.row();
     const int col = index.column();
 
-    return QVariant(engine.Value(col, row));
+    switch (role) {
+        case NumRole:
+            return QVariant(engine.Value(col, row));
+        break;
+
+        case ConstRole:
+            return QVariant(engine.DefaultValue(col, row) != 0);
+        break;
+    }
+
+    return QVariant();
 }
 
 bool SudokuField::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -71,6 +81,7 @@ QHash<int, QByteArray> SudokuField::roleNames() const
     QHash<int, QByteArray> names;
 
     names[NumRole] = "num";
+    names[ConstRole] = "const";
 
     return names;
 }

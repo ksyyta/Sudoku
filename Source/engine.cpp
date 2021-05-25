@@ -19,6 +19,13 @@ int Engine::Value(int x, int y)
     return Field[y*9 + x];
 }
 
+int Engine::DefaultValue(int x, int y)
+{
+    if (x < 0 || x > 8 || y < 0 | y > 8)
+        return 0;
+    return FreshField[y*9 + x];
+}
+
 void Engine::StartGame()
 {
     memset(Field, 0, 81);
@@ -64,7 +71,7 @@ void Engine::StartGame()
 
 void Engine::Solve()
 {
-    for (int i = 0; i < 81; ++i){
+    for (int i = 0; i < 81; ++i) {
         Field[i] = SolvedField[i];
     }
 }
@@ -74,22 +81,21 @@ bool Engine::Solve(int x, int y)
 
     if (x + y*9 >= 81) return true;
 
-    if (x >= 9){
+    if (x >= 9) {
         ++y;
         x = 0;
     }
 
     if (SolvedField[x + y*9] > 0) return Solve(x+1, y);
 
-    for (int num = 1; num <= 9; ++num)
-    {
-        if (Legal(x, y, num)){
+    for (int num = 1; num <= 9; ++num) {
+
+        if (Legal(x, y, num)) {
 
             SolvedField[x + y*9] = num;
 
-            if(Solve(x+1, y)) return true;
+            if (Solve(x+1, y)) return true;
         }
-
         SolvedField[x + y*9] = 0;
     }
     return false;
@@ -102,13 +108,16 @@ void Engine::Hint()
 
     for (size_t i = 0; i < SIZE(Field); ++i) {
         if (Field[i]) continue;
-        temp [count ++] = i;
+        temp[count++] = i;
     }
+
+    if (!count)
+        return;
 
     std::mt19937 gen(time(NULL));
     std::uniform_int_distribution<> distr(0, count - 1);
 
-    int square_num = temp [distr(gen)];
+    int square_num = temp[distr(gen)];
     Field[square_num] = SolvedField[square_num];
 }
 
@@ -124,13 +133,13 @@ void Engine::Print()
     std::cout << std::endl;
 
     if (Solve(0,0)) {
-        for (int i = 0; i <9 ; ++i){
-            for (int j = 0; j < 9; ++j){
+        for (int i = 0; i <9 ; ++i) {
+            for (int j = 0; j < 9; ++j) {
                 std::cout << Field[i*9 + j] << " ";
             }
             std::cout << std::endl;
+        }
     }
-  }
 }
 
 bool Engine::Legal(int x, int y, int num)
@@ -138,12 +147,12 @@ bool Engine::Legal(int x, int y, int num)
     if (num < 1 || num > 9) return false;
 
 //kontrolli rida
-    for (int i = 0; i < 9; ++i){
+    for (int i = 0; i < 9; ++i) {
         if(SolvedField[y * 9 + i] == num) return false;
     }
 
 //kontrolli veerg
-    for (int i = 0; i < 9; ++i){
+    for (int i = 0; i < 9; ++i) {
         if(SolvedField[x + i*9] == num) return false;
     }
 
@@ -165,14 +174,17 @@ bool Engine::MakeMove(int x, int y, int num)
     return true;
 }
 
-void Engine::ClearCell(int x, int y)
+bool Engine::ClearCell(int x, int y)
 {
+    if (FreshField[y*9 + x])
+        return false;
     Field[y*9 + x] = 0;
+    return true;
 }
 
 void Engine::Refresh()
 {
-    for (int i = 0; i < 81; ++i){
+    for (int i = 0; i < 81; ++i) {
         Field[i] = FreshField[i];
     }
 }
