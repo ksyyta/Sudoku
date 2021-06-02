@@ -88,7 +88,7 @@ Rectangle {
             Layout.preferredHeight: 90
             onClicked: {
                 parent.parent.visible = false
-                records.visible = true
+                records_rect.visible = true
             }
 
             contentItem: Text {

@@ -44,9 +44,9 @@ public:
         if (engine.ClearCell(x, y))
             model.Reset();
     }
-    Q_INVOKABLE void Restart()
+    Q_INVOKABLE void Restart(bool isHard)
     {
-        engine.StartGame();
+        engine.StartGame(isHard);
         model.Reset();
     }
 private:

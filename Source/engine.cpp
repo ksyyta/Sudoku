@@ -26,7 +26,7 @@ int Engine::DefaultValue(int x, int y)
     return FreshField[y*9 + x];
 }
 
-void Engine::StartGame()
+void Engine::StartGame(bool isHard)
 {
     memset(Field, 0, 81);
     memset(FreshField, 0, 81);
@@ -38,7 +38,9 @@ void Engine::StartGame()
 
     std::ifstream inFile;
     std::string str;
-    inFile.open("tables.txt");
+    std::string file = isHard ? "tables_2.txt" : "tables.txt";
+
+    inFile.open(file);
     while (std::getline(inFile, str))
        ++numLines;
 
@@ -49,7 +51,7 @@ void Engine::StartGame()
 
     numLines = distr(gen);
 
-    inFile.open("tables.txt");
+    inFile.open(file);
 
     for (int i = 0; i < numLines; ++i)
         std::getline(inFile, str);

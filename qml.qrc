@@ -10,7 +10,6 @@
         <file>resources/pen.png</file>
         <file>resources/repeat.png</file>
         <file>EasyHard.qml</file>
-        <file>Records.qml</file>
         <file>Game.qml</file>
         <file>IconButton.qml</file>
     </qresource>

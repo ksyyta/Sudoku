@@ -15,7 +15,7 @@ public:
     bool Legal(int x, int y, int num);
     bool ClearCell(int x, int y);
     bool Solve(int x, int y);
-    void StartGame();
+    void StartGame(bool isHard);
     void Print();
     void Solve();
     void Hint();

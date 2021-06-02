@@ -2,5 +2,5 @@
 
 Sudoku::Sudoku(QObject *parent) : QObject(parent)
 {
-    engine.StartGame();
+//    engine.StartGame();
 }

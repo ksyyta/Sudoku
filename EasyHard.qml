@@ -19,7 +19,7 @@ Rectangle {
             Layout.preferredHeight: 150
             onClicked: {
                 parent.parent.visible = false
-                Sudoku.Restart()
+                Sudoku.Restart(false)
                 errorCount = 0
                 isGameGoing = true
                 timer_kus.count = 0
@@ -47,7 +47,7 @@ Rectangle {
             Layout.preferredHeight: 150
             onClicked: {
                 parent.parent.visible = false
-                Sudoku.Restart()
+                Sudoku.Restart(true)
                 errorCount = 0
                 isGameGoing = true
                 timer_kus.count = 0

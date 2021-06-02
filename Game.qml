@@ -205,17 +205,20 @@ Item {
             onClicked: {
                 var tmp = timer_kus.count;
                 for (var i = 0; i < 9; i++) {
-                    if (tmp > settings.recordsList[i]) {
-                        var tmp_2 = settings.recordsList[i];
-                        settings.recordsList[i] = tmp;
+                    console.log(i)
+                    if (!dataModel.get(i)) {
+                        dataModel.set(i, {"value": tmp})
+                        break;
+                    }
+                    if (tmp < dataModel.get(i).value) {
+                        var tmp_2 = dataModel.get(i).value;
+                        dataModel.set(i, {"value": tmp})
                         tmp = tmp_2;
                     }
                 }
-
                 timer_kus.count = 0
                 timer_kus.restart()
                 Sudoku.Clear()
-
             }
             ToolTip.text: qsTr("Refresh")
             icon.source: "qrc:/resources/repeat.png"
