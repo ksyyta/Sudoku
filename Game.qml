@@ -6,6 +6,7 @@ import Sudoku 1.0
 
 Item {
     property alias time: time
+    property alias table: table
 
     Rectangle {
         id: field
@@ -144,9 +145,30 @@ Item {
                     if (!table.isLegal)
                         errorCount += 1;
                     if (errorCount >= 3) {
+                        table.activeIndex = -1
                         isGameGoing = false;
                         timer_kus.count = 0
                         timer_kus.stop()
+                    }
+                    if (Sudoku.Filled()) {
+                        var tmp = timer_kus.count;
+                        for (var i = 0; i < 9; i++) {
+                            console.log(i)
+                            if (!dataModel.get(i)) {
+                                dataModel.set(i, {"value": tmp})
+                                break;
+                            }
+                            if (tmp < dataModel.get(i).value) {
+                                var tmp_2 = dataModel.get(i).value;
+                                dataModel.set(i, {"value": tmp})
+                                tmp = tmp_2;
+                            }
+                        }
+                        table.activeIndex = -1
+                        timer_kus.count = 0
+                        timer_kus.stop()
+                        errorCount = 0
+                        isGameGoing = false;
                     }
                 }
 
@@ -203,21 +225,10 @@ Item {
             Layout.preferredWidth: parent.buttonWidth
             Layout.preferredHeight: parent.buttonHeight
             onClicked: {
-                var tmp = timer_kus.count;
-                for (var i = 0; i < 9; i++) {
-                    console.log(i)
-                    if (!dataModel.get(i)) {
-                        dataModel.set(i, {"value": tmp})
-                        break;
-                    }
-                    if (tmp < dataModel.get(i).value) {
-                        var tmp_2 = dataModel.get(i).value;
-                        dataModel.set(i, {"value": tmp})
-                        tmp = tmp_2;
-                    }
-                }
+                table.activeIndex = -1
                 timer_kus.count = 0
                 timer_kus.restart()
+                errorCount = 0
                 Sudoku.Clear()
             }
             ToolTip.text: qsTr("Refresh")
@@ -229,24 +240,63 @@ Item {
         id: endGameMessage
         visible: !isGameGoing
         anchors.centerIn: parent
-        width: 400
-        height: 400
+        width: 600
+        height: 320
+        border.width: 4
+        border.color: settings.color_foreground
+        color: settings.color_background
 
         ColumnLayout {
+            anchors.centerIn: parent
             Button {
                 id: restartButton
-                text: "Restart"
+                Layout.preferredHeight: 50
+                Layout.preferredWidth: 150
+                contentItem: Text {
+                    text: "Restart"
+                    color: settings.color_background_2
+                    font.family: "Comic sans ms"
+                    font.pixelSize: 20
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
                 onClicked: {
                     Sudoku.Clear()
                     isGameGoing = true
                     timer_kus.count = 0
                     timer_kus.restart()
+                    errorCount = 0
+                    table.activeIndex = -1
+                }
+
+                background: Rectangle {
+                    implicitWidth: 40
+                    implicitHeight: 40
+                    color: settings.color_foreground
+                    radius: 2
                 }
             }
             Button {
                 id: closeButton
-                text: "Close"
+                Layout.preferredHeight: 50
+                Layout.preferredWidth: 150
                 onClicked: Qt.quit()
+                contentItem: Text {
+                    text: "Close"
+                    color: settings.color_background_2
+                    font.family: "Comic sans ms"
+                    font.pixelSize: 20
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+                background: Rectangle {
+                    implicitWidth: 40
+                    implicitHeight: 40
+                    color: settings.color_foreground
+                    radius: 2
+                }
             }
         }
     }

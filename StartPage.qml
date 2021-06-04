@@ -17,7 +17,7 @@ Rectangle {
 
     ColumnLayout {
         RadioButton {
-            text: qsTr("First")
+            text: qsTr("Blue")
             checked: settings.color_scheme == 0
             onClicked: {
                 settings.color_scheme = 0;
@@ -28,7 +28,7 @@ Rectangle {
             }
         }
         RadioButton {
-            text: qsTr("Second")
+            text: qsTr("Pink")
             checked: settings.color_scheme == 1
             onClicked: {
                 settings.color_scheme = 1;
@@ -39,7 +39,7 @@ Rectangle {
             }
         }
         RadioButton {
-            text: qsTr("Third")
+            text: qsTr("Green")
             checked: settings.color_scheme == 2
             onClicked: {
                 settings.color_scheme = 2;
@@ -65,6 +65,7 @@ Rectangle {
             onClicked: {
                 parent.parent.visible = false
                 easyhard.visible = true
+                game.table.activeIndex = -1
             }
 
             contentItem: Text {
@@ -89,6 +90,7 @@ Rectangle {
             onClicked: {
                 parent.parent.visible = false
                 records_rect.visible = true
+                game.table.activeIndex = -1
             }
 
             contentItem: Text {

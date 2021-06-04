@@ -49,6 +49,10 @@ public:
         engine.StartGame(isHard);
         model.Reset();
     }
+    Q_INVOKABLE bool Filled()
+    {
+        return engine.Filled();
+    }
 private:
     SudokuField* GetModel() { return &model; }
 

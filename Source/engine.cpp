@@ -190,3 +190,12 @@ void Engine::Refresh()
         Field[i] = FreshField[i];
     }
 }
+
+bool Engine::Filled()
+{
+    for (int i = 0; i < 81; ++i) {
+        if (!Field[i])
+            return false;
+    }
+    return true;
+}

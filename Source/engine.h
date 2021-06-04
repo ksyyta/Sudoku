@@ -11,6 +11,7 @@ public:
     Engine();
     int Value(int x, int y);
     int DefaultValue(int x, int y);
+    bool Filled();
     bool MakeMove(int x, int y, int num);
     bool Legal(int x, int y, int num);
     bool ClearCell(int x, int y);
