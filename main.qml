@@ -79,8 +79,11 @@ Window {
             height: parent.height / 2
             width: parent.width / 2
             model: ListModel {
-            id: dataModel
-                ListElement { value: 0 }
+                id: dataModel
+//                ListElement {
+//                    value: 0
+//                    easy: true
+//                }
             }
             delegate: RowLayout {
                 spacing: 10
@@ -95,6 +98,11 @@ Window {
                     font.pointSize: 20
                     anchors.right: parent.right
                     anchors.rightMargin: -106
+                }
+                Text {
+                    text: easy ? "easy" : "hard"
+                    color: "black"
+                    font.pointSize: 20
                 }
             }
         }

@@ -7,6 +7,8 @@ import Sudoku 1.0
 Item {
     property alias time: time
     property alias table: table
+    property bool hintAvailable: true
+    property bool isEasy: true
 
     Rectangle {
         id: field
@@ -155,12 +157,12 @@ Item {
                         for (var i = 0; i < 9; i++) {
                             console.log(i)
                             if (!dataModel.get(i)) {
-                                dataModel.set(i, {"value": tmp})
+                                dataModel.set(i, {"value": tmp, "easy": isEasy})
                                 break;
                             }
                             if (tmp < dataModel.get(i).value) {
                                 var tmp_2 = dataModel.get(i).value;
-                                dataModel.set(i, {"value": tmp})
+                                dataModel.set(i, {"value": tmp, "easy": isEasy})
                                 tmp = tmp_2;
                             }
                         }
@@ -168,6 +170,7 @@ Item {
                         timer_kus.count = 0
                         timer_kus.stop()
                         errorCount = 0
+                        hintAvailable = true
                         isGameGoing = false;
                     }
                 }
@@ -203,7 +206,13 @@ Item {
         IconButton {
             Layout.preferredWidth: parent.buttonWidth
             Layout.preferredHeight: parent.buttonHeight
-            onClicked: Sudoku.Hint()
+            enabled: hintAvailable
+            onClicked: {
+                if (hintAvailable) {
+                    Sudoku.Hint()
+                    hintAvailable = false;
+                }
+            }
             ToolTip.text: qsTr("Hint")
             icon.source: "qrc:/resources/lamp.png"
         }
@@ -229,6 +238,7 @@ Item {
                 timer_kus.count = 0
                 timer_kus.restart()
                 errorCount = 0
+                hintAvailable = true
                 Sudoku.Clear()
             }
             ToolTip.text: qsTr("Refresh")
@@ -267,6 +277,7 @@ Item {
                     timer_kus.count = 0
                     timer_kus.restart()
                     errorCount = 0
+                    hintAvailable = true
                     table.activeIndex = -1
                 }
 

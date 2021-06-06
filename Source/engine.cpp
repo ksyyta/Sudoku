@@ -12,21 +12,21 @@ Engine::Engine()
 
 }
 
-int Engine::Value(int x, int y)
+int Engine::Value(int x, int y) // Вернуть значение поля по координате
 {
     if (x < 0 || x > 8 || y < 0 | y > 8)
         return 0;
     return Field[y*9 + x];
 }
 
-int Engine::DefaultValue(int x, int y)
+int Engine::DefaultValue(int x, int y) // Вернуть значение свежевого поля по координате
 {
     if (x < 0 || x > 8 || y < 0 | y > 8)
         return 0;
     return FreshField[y*9 + x];
 }
 
-void Engine::StartGame(bool isHard)
+void Engine::StartGame(bool isHard) // Начать игру
 {
     memset(Field, 0, 81);
     memset(FreshField, 0, 81);

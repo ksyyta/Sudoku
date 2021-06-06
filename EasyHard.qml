@@ -21,6 +21,8 @@ Rectangle {
                 parent.parent.visible = false
                 Sudoku.Restart(false)
                 errorCount = 0
+                game.hintAvailable = true
+                game.isEasy = true
                 isGameGoing = true
                 timer_kus.count = 0
                 timer_kus.restart()
@@ -49,6 +51,8 @@ Rectangle {
                 parent.parent.visible = false
                 Sudoku.Restart(true)
                 errorCount = 0
+                game.hintAvailable = true
+                game.isEasy = false
                 isGameGoing = true
                 timer_kus.count = 0
                 timer_kus.restart()

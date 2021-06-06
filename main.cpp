@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
-    app.setOrganizationName("SudokuGame");
-    app.setOrganizationDomain("SUDOKU");
+    app.setOrganizationName("Sudoku_");
+    app.setOrganizationDomain("Sudoku");
 
     auto game = std::make_unique<Sudoku>();
     qmlRegisterSingletonInstance("Sudoku", 1, 0, "Sudoku", game.get());
